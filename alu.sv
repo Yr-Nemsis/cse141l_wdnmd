@@ -30,7 +30,7 @@ always_comb begin
     end
     
     3'b011: begin //beq, lookup table
-      
+      rslt = rd_A - rd_B;
     end
     
     3'b100: //move

@@ -16,8 +16,9 @@ module top_level(
   logic sc_in,   				  // shift/carry out from/to ALU
    		pariQ,              	  // registered parity flag from ALU
 		zeroQ;                    // registered zero flag from ALU 
-  wire  relj;                     // from control to PC; relative jump enable
-  wire  pari,
+  
+  wire  relj,                    // from control to PC; relative jump enable
+   		pari,
         zero,
 		sc_clr,
 		sc_en,
@@ -30,20 +31,18 @@ module top_level(
   wire[A-1:0] alu_cmd;
   wire[8:0]   mach_code;          // machine code
   wire[2:0] reg_adrA, reg_adrB;   //rd_addrA, rd_adrB;
-  
   wire[5:0] immed;
+  
 // fetch subassembly
-  PC #(.D(D)) pc1 (.reset()            ,  // D sets program counter width
-         .clk              ,
-		 .reljump_en (relj),
-		 .absjump_en (absj),
-		 .target           ,
-		 .prog_ctr          );
+  PC #(.D(D)) pc1 (.reset(reset),  // D sets program counter width
+                   .clk(clk),
+		 		   .reljump_en (relj),
+                   .target(target),
+                   .prog_ctr(prog_ctr));
 
 // lookup table to facilitate jumps/branches
-  PC_LUT #(.D(D))
-    pl1 (.addr  (how_high),
-         .target);   
+  PC_LUT #(.D(D)) pl1 (.addr(immed),
+                       .target(target));   
 
 // contains machine code
   instr_ROM ir1(.prog_ctr,
@@ -74,8 +73,11 @@ module top_level(
 		   .sc_i(sc),   // output from sc register
            .rslt(rslt),
 		   .sc_o(sc_o), // input to sc register
-		   .pari);  
+           .pari(pari),
+           .zeroQ(zeroQ));  
 
+  assign relj = (Branch & zeroQ == 1) ? 1'b1 : 1'b0; 
+    
   dat_mem dm1(.dat_in(datA)  ,  // from reg_file
               .clk           ,
 			  .wr_en(MemWrite), // stores

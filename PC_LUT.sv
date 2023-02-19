@@ -1,30 +1,29 @@
+//edited
+//lookup table, enter the line number you want to go
+
 module PC_LUT #(parameter D=12)(
-  input       [ 1:0] addr,	   // target 4 values
+  input       [5:0] addr,	   // target 4 values
   output logic[D-1:0] target);
 
   always_comb case(addr)
-    0: target = -5;   // go back 5 spaces
-	1: target = 20;   // go ahead 20 spaces
-	2: target = '1;   // go back 1 space   1111_1111_1111
-	default: target = 'b0;  // hold PC  
+    0: target = 
+	1: target = 
+	2: target = 
+    3: target = 
+    4: target = 
+	5: target = 
+	6: target = 
+    7: target = 
+    8: target = 
+	9: target = 
+	10: target = 
+    11: target = 
+    12: target = 
+	13: target = 
+	14: target = 
+    15: target =   
+    
+	default: target = 12'b0;  // hold PC  
   endcase
 
 endmodule
-
-/*
-
-	   pc = 4    0000_0000_0100	  4
-	             1111_1111_1111	 -1
-
-                 0000_0000_0011   3
-
-				 (a+b)%(2**12)
-
-
-   	  1111_1111_1011      -5
-      0000_0001_0100     +20
-	  1111_1111_1111      -1
-	  0000_0000_0000     + 0
-
-
-  */
