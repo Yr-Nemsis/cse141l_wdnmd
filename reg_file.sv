@@ -2,7 +2,7 @@
 
 // cache memory/register file
 // default address pointer width = 4, for 16 registers
-module reg_file #(parameter pw=4)(
+module reg_file #(parameter pw=2)(
   input[7:0] dat_in,
   input      clk,
   input 	 reset,
@@ -28,9 +28,8 @@ module reg_file #(parameter pw=4)(
       registers[7] <= 8b'0;
     end
  	else begin
-      if(wr_en) begin				   // anything but stores or no ops
+      if(wr_en)			   // anything but stores or no ops
       		registers[wr_addr] <= dat_in;
-      end
     end
   end
 	

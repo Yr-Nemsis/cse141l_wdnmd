@@ -12,7 +12,7 @@ module dat_mem (
   logic[7:0] data_mem[256];       // 2-dim array  8 wide  256 deep
 
   initial begin
-    for(i = 0; i < 256; i++)
+    for(i = 60; i < 256; i++) //FIXEME
       data_mem[i] <= 8'd0;
   end
   
