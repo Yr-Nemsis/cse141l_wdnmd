@@ -10,14 +10,15 @@ module dat_mem (
   output logic[7:0] dat_out);
 
   logic[7:0] data_mem[256];       // 2-dim array  8 wide  256 deep
+//   wire i;
 
-  initial begin
-    for(i = 60; i < 256; i++) //FIXEME
-      data_mem[i] <= 8'd0;
-  end
+//   initial begin
+//     for(i = 60; i < 256; i++) //FIXEME
+//       data_mem[i] <= 8'd0;
+//   end
   
 // reads are combinational; no enable or clock required
-  assign dat_out = (rd_en == 1'b1) ? registers[addr] : 8'd0;
+  assign dat_out = (rd_en == 1'b1) ? data_mem[addr] : 8'd0;
   
 // writes are sequential (clocked) -- occur on stores or pushes 
   always_ff @(posedge clk)

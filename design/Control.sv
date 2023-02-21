@@ -45,7 +45,7 @@ always_comb begin
   		ALUOp     =   'b001;
       end
       
-      'b010: begin    //load
+      'b101: begin    //load
         Branch    =   'b0;
   		MemtoReg  =   'b1;
   		MemWrite  =   'b0;
@@ -57,7 +57,7 @@ always_comb begin
   		ALUOp     =   'b101;
       end
       
-      'b011: begin    //store
+      'b110: begin    //store
         Branch    =   'b0;
   		MemtoReg  =   'b0; //does not matter
   		MemWrite  =   'b1;
@@ -81,7 +81,7 @@ always_comb begin
   		ALUOp     =   'b100;
       end
       
-      'b101: begin    //rtl
+      'b111: begin    //rtl
         Branch    =   'b0;
   		MemtoReg  =   'b0;
   		MemWrite  =   'b0;
@@ -93,7 +93,7 @@ always_comb begin
   		ALUOp     =   'b111;
       end
       
-      'b110: begin    //xor
+      'b010: begin    //xor
         Branch    =   'b0;
   		MemtoReg  =   'b0;
   		MemWrite  =   'b0;
@@ -105,11 +105,11 @@ always_comb begin
   		ALUOp     =   'b010;
       end
       
-      'b111: begin    //beq
+      'b011: begin    //beq
         Branch    =   'b1;
   		MemtoReg  =   'b0; //does not matter
   		MemWrite  =   'b0; 
-  		ALUSrc    =   'b1; 
+  		ALUSrc    =   'b0; 
   		RegWrite  =   'b0; 
   		Move      =   'b0;
   		MemRead   =   'b0;

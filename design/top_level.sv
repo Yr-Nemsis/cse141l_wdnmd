@@ -1,6 +1,6 @@
 // sample top level design
 module top_level(
-  input        clk, reset, req, 
+  input        clk, reset, init, 
   output logic done);
   parameter D = 12,             // program counter width
     A = 3;             		  // ALU command bit width
@@ -10,12 +10,16 @@ module top_level(
   wire[7:0]   datA,datB, 		//from RegFile
               muxB, 			
 			  rslt,               // alu output
-  			  regfile_dat;
+  			  regfile_dat,
   			  dat_mem_out;
 
   logic sc_in,   				  // shift/carry out from/to ALU
    		pariQ,              	  // registered parity flag from ALU
 		zeroQ;                    // registered zero flag from ALU 
+  
+  logic[2:0] wr_addr,
+  			 rd_addrA,
+  			 rd_addrB;
   
   wire  relj,                    // from control to PC; relative jump enable
    		pari,
@@ -31,7 +35,7 @@ module top_level(
   wire[A-1:0] alu_cmd;
   wire[8:0]   mach_code;          // machine code
   wire[2:0] reg_adrA, reg_adrB;   //rd_addrA, rd_adrB;
-  wire[5:0] immed;
+  wire[7:0] immed;
   
 // fetch subassembly
   PC #(.D(D)) pc1 (.reset(reset),  // D sets program counter width
@@ -41,7 +45,7 @@ module top_level(
                    .prog_ctr(prog_ctr));
 
 // lookup table to facilitate jumps/branches
-  PC_LUT #(.D(D)) pl1 (.addr(immed),
+  PC_LUT #(.D(D)) pl1 (.addr(mach_code[5:0]),
                        .target(target));   
 
 // contains machine code
@@ -49,7 +53,7 @@ module top_level(
                .mach_code);
 
 // control decoder
-  Control ctl1(.instr(alu_cmd),.Branch(Branch),.MemWrite(MemWrite),
+  Control ctl1(.instr(mach_code[8:6]),.Branch(Branch),.MemWrite(MemWrite),
                .MemRead(MemRead),.ALUSrc(ALUSrc),.RegWrite(RegWrite),.ALUOp(alu_cmd),
                .Move(Move),.MemtoReg(MemToReg));
 
@@ -69,17 +73,18 @@ module top_level(
 
   assign muxB = (ALUSrc == 1'b0) ? datB : immed;
   
-  alu alu1(.alu_cmd(alu_cmd),.inA(datA),.inB(muxB),
+  alu alu1(.alu_cmd(alu_cmd),.rd_A(datA),.rd_B(muxB),
 		   .sc_i(sc),   // output from sc register
            .rslt(rslt),
 		   .sc_o(sc_o), // input to sc register
            .pari(pari),
-           .zeroQ(zeroQ));  
+           .zero(zeroQ));  
 
   assign relj = (Branch & zeroQ == 1) ? 1'b1 : 1'b0; 
-    
+  
   dat_mem dm1(.dat_in(datA)  ,  // from reg_file
               .clk           ,
+              .rd_en(MemRead),
 			  .wr_en(MemWrite), // stores
               .addr(rslt),
               .dat_out(dat_mem_out));
@@ -87,14 +92,14 @@ module top_level(
   assign regfile_dat = (MemToReg == 1'b0) ? rslt : dat_mem_out;
   
 // registered flags from ALU
-  always_ff @(posedge clk) begin
-    pariQ <= pari;
-	zeroQ <= zero;
-    if(sc_clr)
-	  sc_in <= 'b0;
-    else if(sc_en)
-      sc_in <= sc_o;
-  end
+//   always_ff @(posedge clk) begin
+//     pariQ <= pari;
+// 	zeroQ <= zero;
+//     if(sc_clr)
+// 	  sc_in <= 'b0;
+//     else if(sc_en)
+//       sc_in <= sc_o;
+//   end
 
   assign done = prog_ctr == 128; //the line number of after the last instruction. 
  

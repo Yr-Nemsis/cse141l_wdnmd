@@ -13,7 +13,7 @@ module alu(
 always_comb begin 
   rslt = 'b0;            
   sc_o = 'b0;    
-  zero = !rslt;
+  zero = 'b0;
   pari = ^rslt;
   case(alu_cmd)
     3'b000: //add rs rt (rs += rt)
@@ -23,14 +23,17 @@ always_comb begin
       rslt = 8'b0 + (rd_A & rd_B);
     
     3'b010: begin //xor rs rt
-      if(rd_A == rd_B)
+      if(rd_A == rd_B) begin
         rslt = 8'b0 + ^(rd_A);
-      else
+      end
+      else begin
         rslt = rd_A ^ rd_B;
+      end
     end
     
     3'b011: begin //beq, lookup table
       rslt = rd_A - rd_B;
+      zero = rd_A == rd_B;
     end
     
     3'b100: //move

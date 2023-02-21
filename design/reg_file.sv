@@ -18,14 +18,14 @@ module reg_file #(parameter pw=2)(
 // writes are sequential (clocked)
   always_ff @(posedge clk) begin
     if(reset) begin
-      registers[0] <= 8b'0;
-      registers[1] <= 8b'0;
-      registers[2] <= 8b'0;
-      registers[3] <= 8b'0;
-      registers[4] <= 8b'0;
-      registers[5] <= 8b'0;
-      registers[6] <= 8b'0;
-      registers[7] <= 8b'0;
+      registers[0] <= 8'b0;
+      registers[1] <= 8'b0;
+      registers[2] <= 8'b0;
+      registers[3] <= 8'b0;
+      registers[4] <= 8'b0;
+      registers[5] <= 8'b0;
+      registers[6] <= 8'b0;
+      registers[7] <= 8'b0;
     end
  	else begin
       if(wr_en)			   // anything but stores or no ops
@@ -34,7 +34,7 @@ module reg_file #(parameter pw=2)(
   end
 	
   // reads are combinational
-  assign datA_out = resigters[rd_addrA];
+  assign datA_out = registers[rd_addrA];
   assign datB_out = registers[rd_addrB];
   
 endmodule

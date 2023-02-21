@@ -7,7 +7,7 @@ module instr_ROM #(parameter D=12)(
 
   logic[8:0] instr_mem[2**D];
   initial							    // load the program
-    $readmemb("mach_code.txt",core);
+    $readmemb("mach_code.txt",instr_mem);
 
   always_comb  mach_code = instr_mem[prog_ctr];
 
