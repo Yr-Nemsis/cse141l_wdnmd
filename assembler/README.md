@@ -6,4 +6,5 @@
 4. 所有的 6 bits immediate都必须写成binary --- 000000 -> 111111
 5. 所有的beq后面跟的label都必须换成6 bits immediate，这个immediate需要根据你需要移动的距离和```PC_LUT.sv```里的index决定。比如你需要PC = PC + 4，在现在的LUT中，+4对应的是index 3，所以6 bits就会变成000011
 6. 在算出所有的距离之后也记得把所有的label删掉。比如 out: 这种label是不能存在的
+7. 关于Comment的话，格式必须的是//，所有在//后面的会跟着一起到machine code文件里面
 ### 其他的可以参考 program3_assem.txt
