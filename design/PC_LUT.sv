@@ -6,20 +6,20 @@ module PC_LUT #(parameter D=12)(
   output logic[D-1:0] target);
 
   always_comb case(addr)
-    0: target = 6;
-	1: target = -9;
-	2: target = 12'b0;
-    3: target = 12'b0;
-    4: target = 12'b0;
-	5: target = 12'b0;
-	6: target = 12'b0;
-    7: target = 12'b0;
-    8: target = 12'b0;
-	9: target = 12'b0;
-	10: target = 12'b0;
-    11: target = 12'b0;
-    12: target = 12'b0;
-	13: target = 12'b0;
+    0: target = 11;
+	1: target = 15;
+	2: target = -17;
+    3: target = 4;
+    4: target = -28;
+	5: target = -38;
+	6: target = 6;
+    7: target = -30;
+    8: target = -18;
+	9: target = -26;
+	10: target = -29;
+    11: target = -39;
+    12: target = -41;
+	13: target = -54;
 	14: target = 12'b0;
     15: target = 12'b0;
     
