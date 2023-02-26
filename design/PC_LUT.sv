@@ -22,7 +22,9 @@ module PC_LUT #(parameter D=12)(
 	13: target = -54;
 	14: target = 12'b0;
     15: target = 12'b0;
-    
+    //program 1
+    16: target = 14;  //beq end
+    17: target = -142; //beq loop
 	default: target = 12'b0;  // hold PC  
   endcase
 
