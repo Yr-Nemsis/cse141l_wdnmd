@@ -25,6 +25,13 @@ module PC_LUT #(parameter D=12)(
     //program 1
     16: target = 14;  //beq end
     17: target = -142; //beq loop
+    //program 2
+    18: target = 2;   //beq skip1 on line 87
+    19: target = 21;  //beq skip2 on line 100
+    20: target = 7;   //beq small on line 112
+    21: target = 3;   //beq skip2 on line 118
+    22: target = 14;  //beq end on line 144
+    23: target = -137; //beq loop on line 157
 	default: target = 12'b0;  // hold PC  
   endcase
 

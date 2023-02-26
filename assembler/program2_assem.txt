@@ -1,0 +1,157 @@
+move $r6, 111 //r6 = 111  int index = 30
+move $r7, 001
+rtl $r6, $r7 //r6 = 1110
+add $r6, $r7 //r6 = 1111
+rtl $r6, $r7 //r6 = 11110 (30)
+move $r7, 000
+add $r7, $r6 //r7 = 11110
+move $r0, 001
+rtl $r7, $r0 //r7 = 111100(60)
+move $r0, 001
+add $r0, $r7  //r0 = 111101 (61)
+store $r6, $r0 //data_mem[61] = index
+move $r1, 001
+add $r0, $r1 //r0 = 111110 (62)
+store $r7, $r0 //data_mem[62] = 60
+load $r0, $r6  //r0 is lsw
+move $r1, 001
+add $r6, $r1 //r6 = index+1
+load $r1, $r0  //r1 is msw
+move $r2, 000  //r2 is bitPos，loop:
+move $r3, 101 //r3 is t1，calculate p1
+move $r4, 100  //r4 = 4
+rtl $r3, $r4  //r3 = 1010000
+move $r4, 101
+add $r3, $r4  //r3 = 1010101
+move $r4, 001
+rtl $r3, $r4  //r3 = 10101010
+move $r4, 000
+add $r4, $r3 //r4 = 10101010
+and $r3, $r0 //r3 = lsw && 10101010
+xor $r3, $r3 //r3 = ^r3
+and $r4, $r1 //r4 = msw && 10101010
+xor $r4, $r4 //r4 = ^r4
+xor $r3, $r4 //t1 = t1^t2
+add $r2, $r3 //bitPos += t1;
+move $r3, 110 //calculate p2
+move $r4, 011 //r4 = 3
+rtl $r3, $r4 //r3 = 110000
+move $r4, 011 
+add $r3, $r4 //r3 = 110011
+move $r4, 010 //r4 = 2 
+rtl $r3, $r4  //r3 = 11001100
+move $r4, 000
+add $r4, $r3  //r4 = 11001100
+and $r3, $r0 //r3 = lsw ^ 1100 1100
+xor $r3, $r3
+and $r4, $r1 //r4 = msw ^ 1100 1100
+xor $r4, $r4 
+xor $r3, $r4 
+move $r4, 001
+rtl $r3, $r4 //r3 = p2 0
+add $r2, $r3 
+move $r3, 111  //calculate p4
+move $r4, 011
+rtl $r3, $r4 //r3 = 111000
+move $r4, 100
+add $r3, $r4 //r3 = 111100
+move $r4, 010
+rtl $r3, $r4    //r3 = 11110000
+move $r4, 000
+add $r4, $r3 //r4 = 11110000
+and $r3, $r0 //r3 = 11110000 ^ lsw
+xor $r3, $r3
+and $r4, $r1 //r4 = 11110000 ^ msw
+xor $r4, $r4
+xor $r3, $r4 
+move $r4, 010
+rtl $r3, $r4
+add $r2, $r3 //r2 = p4 p2 p1
+move $r3, 000  //calculate p0
+add $r3, $r0
+xor $r3, $r3 //r3 = ^lsw
+move $r4, 000
+add $r4, $r1
+xor $r4, $r4 //r4 = ^msw
+xor $r3, $r4 //r3 is f1 now
+move $r4, 000  //calculate p8
+add $r4, $r1  //r4 = msw
+xor $r4, $r4 //r4 = ^msw
+move $r5, 011
+rtl $r4, $r5 //r4 = p8 0 0 0
+add $r2, $r4 //r2 = p8 p4 p2 p1
+move $r4, 000 //r4 = f0 = 0
+move $r6, 000 
+add $r6, $r2 //r2,r6 = bitpos = p8 p4 p2 p1
+move $r7, 000
+beq 010010 //beq skip1 = beq 18
+move $r4, 001  //r3 is f1, r4 is f0
+move $r5, 111 //data_mem[63(0011 1111)] = f0, skip1:
+move $r6, 011 //r6 = 3
+rtl $r5, $r6 //r5 = 111000
+move $r6, 111
+add $r5, $r6 //r5 = 111111(63)
+store $r4, $r5
+move $r6, 001
+add $r5, $r6 //r5 = 64 //data_mem[64(0100 0000)] = f1
+store $r3, $r5
+move $r6, 000
+add $r6, $r3 //r6 = f1
+beq 010011 //beq skip2 = beq 19
+move $r5, 001 //r5 is pos
+move $r6, 000
+add $r6, $r2 //r6 = bitpos
+move $r4, 111
+move $r3, 011 //r3 = 3
+rtl $r4, $r3 //r4 = 111000
+move $r3, 110 
+add $r4, $r3 //r4 = 111110
+move $r3, 010
+rtl $r4, $r3 //r4 = 11111000
+and $r6, $r4 // r6 = bitpos && 11111000
+beq 010100 //beq small = beq 20 if bitpos <= 7
+add $r2, $r4 //r2(bitpos) = r2 - 8 = bitpos - 8
+rtl $r5, $r2 //r5(pos) = r5 << bitpos
+xor $r1, $r5 //msw = msw ^ pos
+move $r6, 000
+move $r7, 000
+beq 010101 //beq skip2 = beq 21
+rtl $r5, $r2  //pos = pos << bitPos, small:
+xor $r0, $r5 //lsw = lsw ^ pos
+move $r4, 111 //skip2:
+move $r5, 011
+rtl $r4, $r5 //r4 = 111000
+move $r5, 101
+add $r4, $r5 //r4 = 0011 1101 (61)
+load $r6, $r4 //r6 = index
+move $r5, 001
+add $r4, $r5  //r4 = 0011 1110 (62)
+load $r7, $r4 //r7 = 60
+add $r4, $r5 //r4 = 63
+load $r2, $r4 //r2 = f0
+add $r4, $r5 //r4 = 64
+load $r3, $r4 // r3 = f1
+rtl $r3, $r5 //r3 = f1 0
+add $r3, $r2 //r3 = f1 f0
+move $r5, 110 //r5 = 6
+rtl $r3, $r5 //r3 = f1 f0 00 0000
+add $r1, $r3 //r1 = F1 F0 0 0 0 D11 D10 D9
+store $r0, $r6 //data_mem[index] = lsw
+move $r5, 001
+add $r6, $r5 //index + 1
+store $r1, $r6 //data_mem[index+1] = msw
+add $r6, $r5 //index = index + 1 = new index
+beq 010110 //beq end = beq 22 if index = 60 end loop
+move $r4, 111
+move $r5, 011
+rtl $r4, $r5 //r4 = 111000
+move $r5, 101
+add $r4, $r5 //r4 = 111101 (61)
+store $r6, $r4 //data_mem[61] = index
+load $r0, $r6  //r0 is lsw
+move $r1, 001
+add $r6, $r1 //r6 = index + 1
+load $r1, $r6  //r1 is msw
+move $r6, 000
+move $r7, 000
+beq 010111 //beq loop = beq 23, 158: end:
