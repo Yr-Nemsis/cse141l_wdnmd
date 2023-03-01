@@ -11,8 +11,6 @@ J-Type: 3 bits opcode, 6 bits immediates
 
 import sys
 
-print (sys.version)
-
 # map registers to binary
 registers_three_bit = {
     "$r0": "000",
