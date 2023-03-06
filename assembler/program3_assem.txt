@@ -84,7 +84,8 @@ move $r5, 001
 add $r0, $r5     // $0 = index++
 move $r6, 010
 rtl $r6, $r2     // $6 = 32  
-move $r7, $r0
+move $r7, 000
+add $r7, $r0
 beq 000011   // PC = PC  + 4
 move $r6, 000
 move $r7, 000
@@ -131,10 +132,11 @@ add $r0, $r5     // $0 = index++
 move $r6, 010
 rtl $r6, $r2     // $6 = 32  
 move $r7, 000
+add $r7, $r0
 beq 000011 // PC = PC + 4
 move $r6, 000
-move $r7, $r0
-beq 001011    PC = PC - 39
+move $r7, 000
+beq 001011      // PC = PC - 39
 move $r0, 000   // $0 = 0000 0000 = index
 move $r5, 000     // $5 = 0000 0000 = i
 move $r7, 000
@@ -186,7 +188,8 @@ move $r5, 010
 rtl $r6, $r5     // $6 = 0001 1100
 move $r5, 011
 add $r6, $r5     // $6 = 31 (0001 1111)
-move $r7, $r0
+move $r7, 000
+add $r7, $r0
 beq 000011 // PC = PC + 4
 move $r6, 000
 move $r7, 000
