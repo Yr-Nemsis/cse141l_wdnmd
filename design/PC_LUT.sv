@@ -24,7 +24,7 @@ module PC_LUT #(parameter D=12)(
     15: target = 12'b0;
     //program 1
     16: target = 14;  //beq end
-    17: target = -142; //beq loop
+    17: target = -143; //beq loop
     //program 2
     18: target = 2;   //beq skip1 on line 87
     19: target = 21;  //beq skip2 on line 100
