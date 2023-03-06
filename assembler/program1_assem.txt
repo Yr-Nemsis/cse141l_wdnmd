@@ -70,7 +70,8 @@ and $r4, $r0 //r4 = lsw && 0000 0001 = b1
 move $r5, 011 //r5 = 3
 rtl $r4, $r5 //r4 = b1 000
 add $r3, $r4  //res2 = b4  b3  b2  p4  b1  000
-move $r4, $r1 //start to calculate p2
+move $r4, 000
+add $r4, $r1 //start to calculate p2
 move $r5, 110 
 and $r4, $r5 //r4 is t1 r4 = 0 0 0 0  0 b11 b10 0
 xor $r4, $r4
@@ -132,7 +133,7 @@ move $r4, 111
 move $r5, 011 //r5 = 3
 rtl $r4, $r5 //r4 = 111000
 move $r5, 101
-add $r4, $r5 //$r4 = 0011 1101 (61)
+add $r4, $r5 //r4 = 0011 1101 (61)
 load $r6, $r4 //r6 = data_mem[61] = index
 move $r5, 001 
 add $r4, $r5 //r4 = 0011 1110 (62)
@@ -150,7 +151,7 @@ move $r4, 111
 move $r5, 011 
 rtl $r4, $r5  //r4 = 111000
 move $r5, 101 
-add $r4, $r5 //$r4 = 0011 1101 (61)
+add $r4, $r5 //r4 = 0011 1101 (61)
 store $r6, $r4 //data_mem[61] = index
 load $r0, $r6 //r0 = lsw
 move $r4, 001
