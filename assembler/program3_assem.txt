@@ -47,7 +47,8 @@ move $r5, 001
 add $r0, $r5     // $r0 = index++
 move $r6, 010
 rtl $r6, $r2     // $6 = 32  
-move $r7, $r0
+move $r7, 000
+add $r7, $r0
 beq 000011 // PC = PC + 4
 move $r6, 000
 move $r7, 000

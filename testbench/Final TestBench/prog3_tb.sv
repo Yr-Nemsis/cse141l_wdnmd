@@ -22,7 +22,7 @@ top_level DUT(.clk, start(req),.ack(done));	               // replace "proc" wit
 initial begin
 // program 3
 // pattern we are looking for; experiment w/ various values
-  pat = 5'b0000;//5'b10101;//$random;
+  pat = {5'b0000,3'b000};//{5'b10101,3'b000};//{$random,3'b000};
   str2 = 0;
   DUT.dm1.core[32] = pat;
   for(int i=0; i<32; i++) begin
