@@ -16,7 +16,7 @@ store $r7, $r0 //data_mem[62] = 60
 load $r0, $r6  //r0 is lsw
 move $r1, 001
 add $r6, $r1 //r6 = index+1
-load $r1, $r0  //r1 is msw
+load $r1, $r6  //r1 is msw
 move $r2, 000  //r2 is bitPos，loop:
 move $r3, 101 //r3 is t1，calculate p1
 move $r4, 100  //r4 = 4
