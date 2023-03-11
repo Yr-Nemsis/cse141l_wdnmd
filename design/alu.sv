@@ -47,6 +47,8 @@ always_comb begin
     
     3'b111: begin//rtl rs rt
       case(rd_B)
+        8'b00000000:
+          rslt = rd_A;
         8'b00000001:
           rslt = {rd_A[6:0], rd_A[7]};
         8'b00000010:

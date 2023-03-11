@@ -6,12 +6,13 @@ module PC_LUT #(parameter D=12)(
   output logic[D-1:0] target);
 
   always_comb case(addr)
+    // program 3
     0: target = 11;
 	1: target = 15;
 	2: target = -17;
     3: target = 4;
     4: target = -28;
-	5: target = -38;
+	5: target = -39;
 	6: target = 6;
     7: target = -30;
     8: target = -18;
@@ -19,7 +20,7 @@ module PC_LUT #(parameter D=12)(
 	10: target = -29;
     11: target = -39;
     12: target = -41;
-	13: target = -54;
+	13: target = -62;
 	14: target = 12'b0;
     15: target = 12'b0;
     //program 1
@@ -32,6 +33,9 @@ module PC_LUT #(parameter D=12)(
     21: target = 3;   //beq skip2 on line 118
     22: target = 14;  //beq end on line 144
     23: target = -137; //beq loop on line 157
+    //program 3
+    24: target = -37;
+    25: target = -48;
 	default: target = 12'b0;  // hold PC  
   endcase
 
