@@ -84,12 +84,12 @@ add $r4, $r1
 xor $r4, $r4
 xor $r3, $r4 
 move $r7, 000
-beq skip1
+beq 011010 //beq skip1
 move $r5, 000
 add $r5, $r6
 move $r6, 000
 add $r6, $r3
-beq skip2
+beq 011011 //beq skip2
 move $r6, 000
 add $r6, $r5
 move $r5, 001
@@ -101,7 +101,7 @@ add $r4, $r3
 move $r3, 010
 rtl $r4, $r3
 and $r6, $r4
-beq small
+beq 010100 //beq small
 add $r2, $r4
 rtl $r5, $r2
 xor $r1, $r5
@@ -109,18 +109,18 @@ move $r3, 000
 move $r4, 001
 move $r6, 000
 move $r7, 000
-beq hello
+beq 010101 //beq hello
 rtl $r5, $r2 //small::
 xor $r0, $r5
 move $r3, 000
 move $r4, 001
 move $r6, 000
 move $r7, 000
-beq hello
+beq 010110 //beq hello
 move $r3, 001 //skip2::
 move $r6, 000
 move $r7, 000
-beq hello
+beq 010111 //beq hello
 move $r3, 000 //skip1::
 move $r4, 000
 move $r2, 111 //hello::
@@ -178,7 +178,7 @@ add $r7, $r1
 move $r1, 001
 add $r0, $r1
 load $r6, $r0
-beq end
+beq 010011 //beq end(195)
 move $r4, 111
 move $r5, 011
 rtl $r4, $r5 
@@ -191,4 +191,4 @@ add $r7, $r1
 load $r1, $r7
 move $r6, 000
 move $r7, 000
-beq loop
+beq 010010 //beq loop
