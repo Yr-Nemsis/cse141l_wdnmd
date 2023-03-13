@@ -27,14 +27,14 @@ module PC_LUT #(parameter D=12)(
     16: target = 14;  //beq end
     17: target = -143; //beq loop
     //program 2
-    18: target = -174;   //beq loop on line 194
-    19: target = 14;  //beq end on line 181
-    20: target = 9;   //beq small on line 104
-    21: target = 14;   //beq hello on line 112
-    22: target = 7;  //beq hello on line 119
-    23: target = 3; //beq hello on line 123
-    26: target = 37; //beq skip1 on line 87
-    27: target = 28; //beq skip2 on line 92	 
+    18: target = -180;   //beq loop on line 200
+    19: target = 14;  //beq end on line 187
+    20: target = 9;   //beq small on line 105
+    21: target = 15;   //beq hello on line 113
+    22: target = 8;  //beq hello on line 120
+    23: target = 3; //beq hello on line 125
+    26: target = 39; //beq skip1 on line 87
+    27: target = 29; //beq skip2 on line 92	 
     //program 3
     24: target = -37;
     25: target = -48;

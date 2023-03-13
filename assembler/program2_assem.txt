@@ -101,6 +101,7 @@ add $r4, $r3
 move $r3, 010
 rtl $r4, $r3
 and $r6, $r4
+move $r7, 000
 beq 010100 //beq small
 add $r2, $r4
 rtl $r5, $r2
@@ -118,6 +119,7 @@ move $r6, 000
 move $r7, 000
 beq 010110 //beq hello
 move $r3, 001 //skip2::
+move $r4, 000
 move $r6, 000
 move $r7, 000
 beq 010111 //beq hello
@@ -138,8 +140,12 @@ move $r6, 100
 rtl $r5, $r6
 add $r2, $r5
 move $r5, 001
+move $r6, 011
+rtl $r5, $r6
 and $r5, $r0
-add $r2, $r5 
+move $r6, 101
+rtl $r5, $r6
+add $r2, $r5
 move $r0, 000
 add $r0, $r2 
 move $r2, 111
