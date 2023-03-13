@@ -46,11 +46,11 @@ initial begin
     p0 = ^d2_in[i]^p8^p4^p2^p1;
     d2_good[i] = {d2_in[i][11:5],p8,d2_in[i][4:2],p4,d2_in[i][1],p2,p1,p0};
 // flip one bit
-    flip[i] =  $random;	  // 'b1000000;
+    flip[i] =  'b1000000;//$random;	  // 'b1000000;
     d2_bad1[i] = d2_good[i] ^ (1'b1<<flip[i]);
 // flip second bit about 25% of the time (flip2<16)		// 00_0010     1010
 // if flip2[5:4]!=0, flip2 will have no effect, and we'll have a one-bit flip
-    flip2[i] = $random;	   // 'b0;
+    flip2[i] = 'b0; //$random;	   // 'b0;
 	d2_bad[i] = d2_bad1[i] ^ (1'b1<<flip2[i]);
 // if flip2[5:4]==0 && flip2[3:0]==flip, then flip2 undoes flip, so no error
     DUT.dm1.data_mem[31+2*i] = {d2_bad[i][15:8]};
@@ -63,6 +63,7 @@ initial begin
   $display();
   $display("start program 2");
   $display();
+
   for(int i=0; i<15; i++) begin
     $displayb({5'b0,d2_in[i]});
     $writeb  (DUT.dm1.data_mem[1+2*i]);

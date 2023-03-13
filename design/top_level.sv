@@ -74,16 +74,16 @@ module top_level(
   assign muxB = (ALUSrc == 1'b0) ? datB : immed;
   
   alu alu1(.alu_cmd(alu_cmd),.rd_A(datA),.rd_B(muxB),
-		   .sc_i(sc),   // output from sc register
            .rslt(rslt),
-		   .sc_o(sc_o), // input to sc register
-           .pari(pari),
+           .rd_addrA(rd_addrA),
+           .rd_addrB(rd_addrB),
            .zero(zeroQ));  
 
   assign relj = (Branch & zeroQ == 1) ? 1'b1 : 1'b0; 
   
   dat_mem dm1(.dat_in(datA)  ,  // from reg_file
               .clk           ,
+              .reset         ,
               .rd_en(MemRead),
 			  .wr_en(MemWrite), // stores
               .addr(rslt),
@@ -101,6 +101,6 @@ module top_level(
 //       sc_in <= sc_o;
 //   end
 
-  assign done = prog_ctr == 128; //the line number of after the last instruction. 
+  assign done = prog_ctr == 250; //the line number of after the last instruction. 
  
 endmodule
